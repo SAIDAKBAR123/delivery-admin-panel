@@ -1,4 +1,4 @@
-# cms-sayyora
+# cms-jasur
 
 ## Project setup
 ```

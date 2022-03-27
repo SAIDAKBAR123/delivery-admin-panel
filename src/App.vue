@@ -2,7 +2,9 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
+      src="https://psmag.com/.image/t_share/MTUyOTEwNTkyMjkyNjkzNTk1/chad-madden-170954.jpg"
       app
+      dark
       clipped
     >
       <v-list dense>
@@ -11,43 +13,67 @@
             <v-icon>mdi-android-messages</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Murojaatlar</v-list-item-title>
+            <v-list-item-title>Orders</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/kompaniya" link>
+        <v-list-item to="/products" link>
           <v-list-item-action>
             <v-icon>mdi-briefcase-account-outline</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Kompaniya Qo'shish</v-list-item-title>
+            <v-list-item-title>Products</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item to="/categories" link>
+          <v-list-item-action>
+            <v-icon>mdi-briefcase-account-outline</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Categories</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item to="/users" link>
+          <v-list-item-action>
+            <v-icon>mdi-account-reactivate</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title> Users </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item to="/merchants" link>
+          <v-list-item-action>
+            <v-icon>mdi-account-reactivate</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title> Merchants </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      clipped-left
-    >
+    <v-app-bar app clipped-left dark>
       <!-- <v-app-bar-nav-icon  @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
-      <v-btn small text fab @click.stop="drawer = !drawer"><v-icon>mdi-bullseye</v-icon></v-btn>
-      <v-toolbar-title class="pl-1"> UMUMIY TIZIM</v-toolbar-title>
+      <v-btn small text fab @click.stop="drawer = !drawer">
+        <v-icon>mdi-coffee</v-icon>
+      </v-btn>
+      <v-toolbar-title class="pl-1 title"> Jay's cafe</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-avatar size="50" class="mr-4"><v-img contain :src="require('./assets/user_image.png')"></v-img></v-avatar>
-      <span class="nameofUser">Sayyora Rahimova</span>
+      <v-avatar size="40" class="mr-4"
+        ><v-img contain :src="require('./assets/user_image.png')"></v-img
+      ></v-avatar>
+      <span class="">Jasur Sherbaev</span>
       <!-- <v-btn color="red darken-2" elevation="0">Chiqish</v-btn> -->
     </v-app-bar>
 
-    <v-content>
-      <v-container
-      >
-      <router-view></router-view>
+    <v-main>
+      <v-container>
+        <router-view></router-view>
       </v-container>
-    </v-content>
+    </v-main>
 
-    <v-footer app>
-      <span>&copy;Sayyora Rahimova 2020</span>
-    </v-footer>
+    <!-- <v-footer app>
+      <span>&copy;Jasur Sherbaev 2022</span>
+    </v-footer> -->
   </v-app>
 </template>
 
@@ -60,13 +86,13 @@ export default {
     drawer: null
   }),
   created () {
-    this.$vuetify.theme.dark = true
+    this.$vuetify.theme.dark = false
   }
 }
 </script>
 <style scoped>
-.nameofUser{
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.nameofUser {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: rgb(51, 173, 230);
   font-weight: 500;
 }
