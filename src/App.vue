@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
-      src="https://psmag.com/.image/t_share/MTUyOTEwNTkyMjkyNjkzNTk1/chad-madden-170954.jpg"
+      src="https://img.lovepik.com/background/20211101/medium/lovepik-abstract-background-mobile-phone-wallpaper-image_400624615.jpg"
       app
       dark
       clipped
@@ -18,7 +18,7 @@
         </v-list-item>
         <v-list-item to="/products" link>
           <v-list-item-action>
-            <v-icon>mdi-briefcase-account-outline</v-icon>
+            <v-icon>mdi-rocket-launch</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Products</v-list-item-title>
@@ -26,7 +26,7 @@
         </v-list-item>
         <v-list-item to="/categories" link>
           <v-list-item-action>
-            <v-icon>mdi-briefcase-account-outline</v-icon>
+            <v-icon>mdi-view-list</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Categories</v-list-item-title>
@@ -42,7 +42,7 @@
         </v-list-item>
         <v-list-item to="/merchants" link>
           <v-list-item-action>
-            <v-icon>mdi-account-reactivate</v-icon>
+            <v-icon>mdi-food</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title> Merchants </v-list-item-title>
@@ -51,7 +51,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app clipped-left dark>
+    <v-app-bar app dark clipped-left src="https://img.lovepik.com/background/20211101/medium/lovepik-abstract-background-mobile-phone-wallpaper-image_400624615.jpg" >
       <!-- <v-app-bar-nav-icon  @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
       <v-btn small text fab @click.stop="drawer = !drawer">
         <v-icon>mdi-coffee</v-icon>
@@ -87,6 +87,7 @@ export default {
   }),
   created () {
     this.$vuetify.theme.dark = false
+    this.$vuetify.theme.themes.light.primary = '#471284'
   }
 }
 </script>

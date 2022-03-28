@@ -5,7 +5,7 @@
         <h3 class=" text-uppercase text-left">Product list</h3>
       </v-col>
       <v-col cols="auto">
-        <v-btn color="blue" @click="dialog = true" dark>Create</v-btn>
+        <v-btn color="primary" @click="dialog = true" dark>Create</v-btn>
       </v-col>
     </v-row>
     <v-simple-table>

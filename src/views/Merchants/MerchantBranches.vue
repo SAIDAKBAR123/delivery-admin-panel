@@ -5,7 +5,7 @@
         <h3>Merchant Branch list ( {{ merchantTitle }})</h3>
       </v-col>
       <v-col cols="auto">
-        <v-btn color="blue" @click="dialog = true" dark>create</v-btn>
+        <v-btn color="primary" @click="dialog = true" dark>create</v-btn>
       </v-col>
     </v-row>
     <v-simple-table>
