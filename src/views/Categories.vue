@@ -64,7 +64,8 @@ export default {
   methods: {
     createCategory () {
       Categories.postCategory({
-        name: this.form.name
+        name: this.form.name,
+        merchant_id: this.$route.params.merchantId
       }).then(res => {
         this.dialog = false
         window.location.reload()
@@ -87,7 +88,7 @@ export default {
     getCategories () {
       Categories.getCategories().then(res => {
         console.log(res)
-        this.desserts = res.categories
+        this.desserts = res.categories.filter(el => el.merchant_id === this.$route.params.merchantId)
       })
     }
   },

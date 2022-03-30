@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
-      src="https://img.lovepik.com/background/20211101/medium/lovepik-abstract-background-mobile-phone-wallpaper-image_400624615.jpg"
+      color="grey darken-4"
       app
       dark
       clipped
@@ -24,14 +24,6 @@
             <v-list-item-title>Products</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/categories" link>
-          <v-list-item-action>
-            <v-icon>mdi-view-list</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Categories</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
         <v-list-item to="/users" link>
           <v-list-item-action>
             <v-icon>mdi-account-reactivate</v-icon>
@@ -51,12 +43,12 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app dark clipped-left src="https://img.lovepik.com/background/20211101/medium/lovepik-abstract-background-mobile-phone-wallpaper-image_400624615.jpg" >
+    <v-app-bar app  clipped-left color="black" dark>
       <!-- <v-app-bar-nav-icon  @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
       <v-btn small text fab @click.stop="drawer = !drawer">
         <v-icon>mdi-coffee</v-icon>
       </v-btn>
-      <v-toolbar-title class="pl-1 title"> Jay's cafe</v-toolbar-title>
+      <v-toolbar-title dark class="pl-1 title"> Jay's cafe</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-avatar size="40" class="mr-4"
         ><v-img contain :src="require('./assets/user_image.png')"></v-img
@@ -86,7 +78,7 @@ export default {
     drawer: null
   }),
   created () {
-    this.$vuetify.theme.dark = false
+    this.$vuetify.theme.dark = true
     this.$vuetify.theme.themes.light.primary = '#471284'
   }
 }
