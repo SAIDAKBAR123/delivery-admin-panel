@@ -16,14 +16,14 @@
             <v-list-item-title>Orders</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/products" link>
+        <!-- <v-list-item to="/products" link>
           <v-list-item-action>
             <v-icon>mdi-rocket-launch</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Products</v-list-item-title>
           </v-list-item-content>
-        </v-list-item>
+        </v-list-item> -->
         <v-list-item to="/users" link>
           <v-list-item-action>
             <v-icon>mdi-account-reactivate</v-icon>

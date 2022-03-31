@@ -50,6 +50,17 @@
             return-object
             single-line
           ></v-select>
+          <v-select
+              v-model="form.user_id"
+              :hint="`Please, select use here`"
+              :items="users"
+              item-text="name"
+              item-value="guid"
+              label="Select user"
+              persistent-hint
+              return-object
+              single-line
+          ></v-select>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -65,21 +76,32 @@
 <script>
 import Orders from '../services/Orders'
 import Products from '../services/Products'
+import Users from '../services/Users'
+
 export default {
   data () {
     return {
       dialog: false,
       desserts: [],
       products: [],
+      users: [],
       form: {
         address: '',
         comment: '',
         product_id: '',
-        user_id: 'jusi'
+        user_id: ''
       }
     }
   },
   methods: {
+    getUsers () {
+      Users.getUsers().then(res => {
+        console.log(res)
+        this.users = res.users
+      }).catch(err => {
+        console.log(err)
+      })
+    },
     orderNow () {
       console.log(this.form)
       Orders.postOrder({
@@ -122,6 +144,7 @@ export default {
   },
   created () {
     this.getOrders()
+    this.getUsers()
   }
 }
 </script>

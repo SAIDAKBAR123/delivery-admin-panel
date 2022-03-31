@@ -58,7 +58,7 @@
               return-object
               single-line
           ></v-select>
-           <v-select
+           <!-- <v-select
               v-model="form.user_id"
               :hint="`Please, select use here`"
               :items="users"
@@ -68,7 +68,7 @@
               persistent-hint
               return-object
               single-line
-          ></v-select>
+          ></v-select> -->
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -84,7 +84,6 @@
 <script>
 import Products from '../services/Products'
 import Categories from '../services/Categories'
-import Users from '../services/Users'
 
 export default {
   data () {
@@ -106,14 +105,7 @@ export default {
     }
   },
   methods: {
-    getUsers () {
-      Users.getUsers().then(res => {
-        console.log(res)
-        this.users = res.users
-      }).catch(err => {
-        console.log(err)
-      })
-    },
+
     createProduct () {
       console.log(this.form)
       Products.postProduct({

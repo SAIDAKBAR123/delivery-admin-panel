@@ -41,7 +41,7 @@
         <v-card-title class="headline">Merchant branch panel</v-card-title>
         <v-card-text>
           <v-text-field v-model="form.name" label="Name" />
-          <v-text-field v-model="form.address" label="Login here"/>
+          <v-text-field v-model="form.address" label="Address here"/>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
