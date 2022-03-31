@@ -108,7 +108,7 @@ export default {
         address: this.form.address,
         comment: this.form.comment,
         product_id: this.form.product_id.guid,
-        user_id: '9b5c1305-6c15-4033-934e-bde78c364612'
+        user_id: this.form.product_id.user_id
       }).then(res => {
         this.dialog = false
         console.log(res)
