@@ -40,6 +40,14 @@
             <v-list-item-title> Merchants </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item to="/couriers" link>
+          <v-list-item-action>
+            <v-icon>mdi-truck-fast</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title> Couriers </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
