@@ -10,10 +10,10 @@
     </v-tabs>
 
     <v-tabs-items v-model="tab">
-      <v-tab-item :key="2343">
+      <v-tab-item :key="2343" class="mb-5">
           <MerchantBranches />
       </v-tab-item>
-      <v-tab-item :key="5544">
+      <v-tab-item :key="5544" class="mb-5">
           <Cateogory />
       </v-tab-item>
     </v-tabs-items>

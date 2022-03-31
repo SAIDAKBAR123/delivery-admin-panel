@@ -23,7 +23,7 @@
         <tbody>
           <tr class="pointer" v-for="(item,i) in desserts" :key="item.guid + i" @click="clickRow(item.guid)">
             <td>{{ i + 1 }}</td>
-            <td>{{ item.name }}</td>
+            <td style="cursor: pointer">{{ item.name }}</td>
             <td>{{ item.created_at | timeformatter }}</td>
             <td>{{ item.comission }}</td>
             <td>{{ item.delivery_time }}</td>

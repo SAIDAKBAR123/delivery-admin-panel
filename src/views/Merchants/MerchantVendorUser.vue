@@ -2,7 +2,7 @@
   <div class="mx-2 my-2">
     <v-row class="my-2" justify="space-between" align="center">
       <v-col cols="auto">
-        <h3>Merchant Branch list ( {{ merchantTitle }})</h3>
+        <h3>Merchant User list ( {{ merchantTitle }})</h3>
       </v-col>
       <v-col cols="auto">
         <v-btn color="primary" @click="dialog = true" dark>create</v-btn>
@@ -22,12 +22,12 @@
         <tbody>
           <tr v-for="(item,i) in desserts" :key="item.guid + i">
             <td>{{ i + 1 }}</td>
-            <td style="cursor: pointer" @click="$router.push({ name: 'Merchant-branches-id', params: { merchantBranchId: item.guid }})">{{ item.name }}</td>
+            <td>{{ item.name }}</td>
             <td>{{ item.address }}</td>
             <td>{{ item.created_at | timeformatter }}</td>
             <td>
-              <v-btn class=" text-capitalize ml-2" @click="updateMerchantBranch(item)" outlined color="orange darken-1" text fab small><v-icon>mdi-pen</v-icon></v-btn>
-              <v-btn class=" text-capitalize ml-2" @click="deleteMerchantBranch(item.guid)" outlined color="red" text fab small><v-icon>mdi-delete</v-icon></v-btn>
+              <v-btn class=" text-capitalize ml-2" @click="updateVendorUser(item)" outlined color="orange darken-1" text fab small><v-icon>mdi-pen</v-icon></v-btn>
+              <v-btn class=" text-capitalize ml-2" @click="deleteMerchantBranchVendorUser(item.guid)" outlined color="red" text fab small><v-icon>mdi-delete</v-icon></v-btn>
             </td>
           </tr>
         </tbody>
@@ -38,10 +38,11 @@
       <template v-slot:activator="{  }">
       </template>
       <v-card width="500pxd">
-        <v-card-title class="headline">Merchant branch panel</v-card-title>
+        <v-card-title class="headline">Merchant branch vendor user panel</v-card-title>
         <v-card-text>
           <v-text-field v-model="form.name" label="Name" />
-          <v-text-field v-model="form.address" label="Login here"/>
+          <v-text-field v-model="form.login" label="Password here"/>
+          <v-text-field v-model="form.password" label="Password here"/>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -56,7 +57,7 @@
 
 <script>
 import MerchantBranch from '../../services/MerchantBranch'
-import Merchant from '../../services/Merchant'
+import VendorUser from '../../services/VendorUser'
 
 export default {
   data () {
@@ -66,15 +67,16 @@ export default {
       products: [],
       merchantTitle: '',
       form: {
-        address: 'string',
-        merchant_id: this.$route.params.merchantId,
-        name: 'string'
+        login: 'string',
+        merchant_branch_id: this.$route.params.merchantBranchId,
+        name: 'string',
+        password: 'string'
       }
     }
   },
   methods: {
     submitForm (item = this.form) {
-      MerchantBranch[item.guid ? 'updateMerchantBranch' : 'postMerchantBranch']({
+      VendorUser[item.guid ? 'putVendorUser' : 'postVendorUser']({
         ...this.form
       }).then(res => {
         this.dialog = false
@@ -85,14 +87,14 @@ export default {
         console.log(err)
       })
     },
-    updateMerchantBranch (item) {
+    updateVendorUser (item) {
       this.dialog = true
       this.form = item
       console.log(item)
     },
-    deleteMerchantBranch (id) {
+    deleteMerchantBranchVendorUser (id) {
       console.log(id)
-      MerchantBranch.deleteMerchantBranch({ guid: id }).then(res => {
+      VendorUser.deleteVendorUser({ guid: id }).then(res => {
         console.log(res)
         alert('deleted successfully')
         window.location.reload()
@@ -100,20 +102,19 @@ export default {
         alert('This products contains some orders; we cannot delete it')
       })
     },
-    getMerchantBranch (id) {
-      Merchant.getMerchant(id).then(res => {
+    getVendorUsers (id) {
+      MerchantBranch.getMerchantBranch(id).then(res => {
         console.log(res)
         this.merchantTitle = res.name
       })
-      MerchantBranch.getMerchantBranches(id).then(res => {
+      VendorUser.getVendorUsers(id).then(res => {
         console.log(res)
-        this.desserts = res.merchant_branches
-        // this.getProducts()
+        this.desserts = res.vendor_users
       })
     }
   },
   created () {
-    this.getMerchantBranch(this.$route.params.merchantId)
+    this.getVendorUsers(this.$route.params.merchantBranchId)
   }
 }
 </script>
