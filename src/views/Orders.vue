@@ -61,6 +61,17 @@
               return-object
               single-line
           ></v-select>
+          <v-select
+              v-model="form.branch_id"
+              :hint="`Please, branch here`"
+              :items="merchantBranchList"
+              item-text="name"
+              item-value="guid"
+              label="Select Branch"
+              persistent-hint
+              return-object
+              single-line
+          ></v-select>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -77,6 +88,7 @@
 import Orders from '../services/Orders'
 import Products from '../services/Products'
 import Users from '../services/Users'
+import MerchantBranch from '../services/MerchantBranch'
 
 export default {
   data () {
@@ -85,11 +97,14 @@ export default {
       desserts: [],
       products: [],
       users: [],
+      merchantBranchList: [],
       form: {
         address: '',
         comment: '',
         product_id: '',
-        user_id: ''
+        user_id: '',
+        branch_id: '322656d6-97f9-4a7e-8270-e31aee2d76db'
+
       }
     }
   },
@@ -108,7 +123,9 @@ export default {
         address: this.form.address,
         comment: this.form.comment,
         product_id: this.form.product_id.guid,
-        user_id: this.form.user_id.guid
+        user_id: this.form.user_id.guid,
+        branch_id: this.form.branch_id.guid
+
       }).then(res => {
         this.dialog = false
         console.log(res)
@@ -116,6 +133,12 @@ export default {
         this.form = {}
       }).catch(err => {
         console.log(err)
+      })
+    },
+    getMerchanBranchList () {
+      MerchantBranch.getMerchantBranchList().then(res => {
+        console.log(res)
+        this.merchantBranchList = res.merchant_branches
       })
     },
     deleteOrder (id) {
@@ -145,6 +168,7 @@ export default {
   created () {
     this.getOrders()
     this.getUsers()
+    this.getMerchanBranchList()
   }
 }
 </script>

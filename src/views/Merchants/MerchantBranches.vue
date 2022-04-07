@@ -66,9 +66,9 @@ export default {
       products: [],
       merchantTitle: '',
       form: {
-        address: 'string',
+        address: '',
         merchant_id: this.$route.params.merchantId,
-        name: 'string'
+        name: ''
       }
     }
   },
