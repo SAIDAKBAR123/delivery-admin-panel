@@ -56,7 +56,7 @@
       <v-btn small text fab @click.stop="drawer = !drawer">
         <v-icon>mdi-coffee</v-icon>
       </v-btn>
-      <v-toolbar-title dark class="pl-1 title"> Jay's cafe</v-toolbar-title>
+      <v-toolbar-title dark class="pl-1 title"> Deleveryegy admin</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-avatar size="40" class="mr-4"
         ><v-img contain :src="require('./assets/user_image.png')"></v-img
@@ -86,7 +86,7 @@ export default {
     drawer: null
   }),
   created () {
-    this.$vuetify.theme.dark = true
+    this.$vuetify.theme.dark = false
     this.$vuetify.theme.themes.light.primary = '#471284'
   }
 }
