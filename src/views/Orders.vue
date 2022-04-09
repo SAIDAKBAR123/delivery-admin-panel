@@ -16,6 +16,7 @@
             <th class="text-left">Address</th>
             <th class="text-left">Comments</th>
             <th class="text-left">Created at</th>
+            <th class="text-left">Status</th>
             <th class="text-left">  </th>
           </tr>
         </thead>
@@ -25,6 +26,9 @@
             <td>{{ item.address }}</td>
             <td>{{ item.comment }}</td>
             <td>{{ item.created_at | timeformatter }}</td>
+            <td><v-chip text-color="orange" color="yellow lighten-4" class="rounded">
+              {{getStatus(item.status)
+              }}</v-chip></td>
             <td><v-btn class=" text-capitalize ml-2" @click="deleteOrder(item.guid)" outlined color="red" text fab small><v-icon>mdi-delete</v-icon></v-btn></td>
           </tr>
         </tbody>
@@ -109,6 +113,22 @@ export default {
     }
   },
   methods: {
+    getStatus (status) {
+      switch (status) {
+        case 'new':
+          return 'New'
+        case 'restaurant-proccess':
+          return 'Restaurant process'
+        case 'restaurant-ready':
+          return 'Restaurant ready'
+        case 'courier-accepted':
+          return 'Courier accepted'
+        case 'courier-delivered':
+          return 'Courier delivered'
+        default:
+          return 'New'
+      }
+    },
     getUsers () {
       Users.getUsers().then(res => {
         console.log(res)
