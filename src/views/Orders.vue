@@ -47,6 +47,7 @@
             v-model="form.product_id"
             :hint="`You can select product you want to order`"
             :items="products"
+            multiple
             item-text="name"
             item-value="guid"
             label="Select product"
@@ -142,7 +143,7 @@ export default {
       Orders.postOrder({
         address: this.form.address,
         comment: this.form.comment,
-        product_id: this.form.product_id.guid,
+        product_ids: this.form.product_id.map(el => el.guid),
         user_id: this.form.user_id.guid,
         branch_id: this.form.branch_id.guid
 
