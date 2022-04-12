@@ -48,6 +48,14 @@
             <v-list-item-title> Couriers </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item to="/reports" link>
+          <v-list-item-action>
+            <v-icon>mdi-table</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title> Reports </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 

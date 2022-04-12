@@ -5,7 +5,7 @@
         <h3>Orders list</h3>
       </v-col>
       <v-col cols="auto">
-        <v-btn color="primary" @click="dialog = true">create</v-btn>
+        <v-btn color="primary" @click="dialog = true">Create</v-btn>
       </v-col>
     </v-row>
     <v-simple-table>
@@ -17,7 +17,7 @@
             <th class="text-left">Comments</th>
             <th class="text-left">Created at</th>
             <th class="text-left">Status</th>
-            <th class="text-left">  </th>
+            <th class="text-left"></th>
           </tr>
         </thead>
         <tbody>
@@ -27,7 +27,8 @@
             <td>{{ item.comment }}</td>
             <td>{{ item.created_at | timeformatter }}</td>
             <td><v-chip text-color="orange" color="yellow lighten-4" class="rounded">
-              {{getStatus(item.status)
+              {{
+                getStatus(item.status)
               }}</v-chip></td>
             <td><v-btn class=" text-capitalize ml-2" @click="deleteOrder(item.guid)" outlined color="red" text fab small><v-icon>mdi-delete</v-icon></v-btn></td>
           </tr>
@@ -107,6 +108,8 @@ export default {
         address: '',
         comment: '',
         product_id: '',
+        delivery_type: 'delivery',
+        payment_type: 'card',
         user_id: '',
         branch_id: '322656d6-97f9-4a7e-8270-e31aee2d76db'
 
@@ -143,14 +146,15 @@ export default {
       Orders.postOrder({
         address: this.form.address,
         comment: this.form.comment,
-        product_ids: this.form.product_id.map(el => el.guid),
+        product_id: this.form.product_id.map(el => el.id),
         user_id: this.form.user_id.guid,
-        branch_id: this.form.branch_id.guid
-
+        branch_id: this.form.branch_id.guid,
+        delivery_type: 'delivery',
+        payment_type: 'cash'
       }).then(res => {
         this.dialog = false
         console.log(res)
-        window.location.reload()
+        // window.location.reload()
         this.form = {}
       }).catch(err => {
         console.log(err)

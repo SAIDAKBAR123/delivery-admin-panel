@@ -65,19 +65,17 @@ export default {
       desserts: [],
       products: [],
       form: {
-        login: 'string',
-        name: 'string',
-        password: 'string'
+        login: '',
+        name: '',
+        password: ''
       }
     }
   },
   methods: {
-    submitUser (item = this.form) {
-      Users[item.guid ? 'putUser' : 'postUser']({
-        login: this.form.login,
-        name: this.form.name,
-        password: this.form.password
-      }).then(res => {
+    submitUser () {
+      const item = { ...this.form }
+      console.log(item)
+      Users[item.guid ? 'putUser' : 'postUser'](item).then(res => {
         this.dialog = false
         console.log(res)
         window.location.reload()
@@ -88,7 +86,7 @@ export default {
     },
     updateUser (item) {
       this.dialog = true
-      this.form = item
+      this.form = { ...item }
       console.log(item)
     },
     deleteUser (id) {

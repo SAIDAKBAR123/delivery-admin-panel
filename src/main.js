@@ -8,7 +8,6 @@ Vue.config.productionTip = false
 
 Vue.filter('timeformatter', function (value) {
   const [date, timeRange] = value.split('T')
-  console.log(value)
   return date + ' ' + timeRange.substring(0, 5)
 })
 

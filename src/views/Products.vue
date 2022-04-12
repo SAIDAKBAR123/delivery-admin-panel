@@ -47,28 +47,27 @@
         <v-card-text>
           <v-text-field v-model="form.name" label="Name" />
           <v-text-field v-model="form.price" label="Price"/>
+          <v-text-field v-model="form.image" label="Image"/>
            <v-select
               v-model="form.category_id"
-              :hint="`You can select category you want to order`"
               :items="categories"
               item-text="name"
               item-value="guid"
-              label="Select product"
+              label="Select category"
               persistent-hint
               return-object
               single-line
           ></v-select>
-           <!-- <v-select
-              v-model="form.user_id"
-              :hint="`Please, select use here`"
-              :items="users"
-              item-text="name"
-              item-value="guid"
-              label="Select user"
-              persistent-hint
-              return-object
-              single-line
-          ></v-select> -->
+          <label for="item">Options</label>
+          <v-row v-for="(ls, i) in form.options" :key="i">
+            <v-col cols="6">
+                <v-text-field label="Option name" v-model="ls.name"></v-text-field>
+            </v-col>
+            <v-col cols="6">
+                <v-text-field label="Option price" v-model="ls.price"></v-text-field>
+            </v-col>
+          </v-row>
+          <v-btn block color="green" @click="addRow" text outlined class="rounded-lg">Add new row</v-btn>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -93,9 +92,11 @@ export default {
       categories: [],
       users: [],
       form: {
+        image: '',
         category_id: '',
         name: '',
-        price: 0
+        price: 0,
+        options: []
       }
     }
   },
@@ -105,13 +106,27 @@ export default {
     }
   },
   methods: {
-
+    addRow () {
+      this.form.options.push({
+        name: '',
+        price: 0
+      })
+      // this.form = {
+      //   ...this.form,
+      //   options: [...this.form, {
+      //     name: '',
+      //     price: 0
+      //   }]
+      // }
+    },
     createProduct () {
       console.log(this.form)
       Products.postProduct({
         category_id: this.form.category_id.guid,
         name: this.form.name,
-        price: parseInt(this.form.price)
+        image: this.form.image,
+        price: parseInt(this.form.price),
+        options: this.form.options.map(el => ({ ...el, price: parseInt(el.price) }))
       }).then(res => {
         console.log(res)
         alert('Post has successfully added')

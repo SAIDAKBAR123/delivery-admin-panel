@@ -6,6 +6,7 @@ const req = {
   getMerchantBranches: (guid) => request({ method: 'get', url: `/merchant/get-branches/${guid}` }),
   getMerchantBranchList: () => request({ method: 'get', url: '/merchant-branch/list' }),
   getMerchantBranch: (id, data) => request({ method: 'get', url: `/merchant-branch/get/${id}`, data }),
-  deleteMerchantBranch: (data) => request({ method: 'delete', url: '/merchant-branch/delete', data })
+  deleteMerchantBranch: (data) => request({ method: 'delete', url: '/merchant-branch/delete', data }),
+  getMerchantBranchOrders: (guid) => request({ method: 'get', url: `/merchant-branch/${guid}/orders` })
 }
 export default req
