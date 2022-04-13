@@ -8,40 +8,38 @@
         <v-btn color="primary" @click="dialog = true">Create</v-btn>
       </v-col>
     </v-row>
-    <v-simple-table>
-      <template v-slot:default>
-        <thead>
-          <tr>
-            <th class="text-left">Order number</th>
-            <th class="text-left">Address</th>
-            <th class="text-left">Comments</th>
-            <th class="text-left">Created at</th>
-            <th class="text-left">Status</th>
-            <th class="text-left">Delivery type</th>
-            <th class="text-left">Delivery price</th>
-            <th class="text-left">Payment type</th>
-
-            <th class="text-left"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item,i) in desserts" :key="item.product_id + i">
-            <td>{{ i + 1 }}</td>
-            <td>{{ item.address }}</td>
-            <td>{{ item.comment }}</td>
-            <td>{{ item.created_at | timeformatter }}</td>
-            <td><v-chip text-color="orange" color="yellow lighten-4" class="rounded">
-              {{
-                getStatus(item.status)
-              }}</v-chip></td>
-              <td>{{ item.delivery_type }}</td>
-              <td>{{ item.delivery_price }}</td>
-              <td>{{ item.payment_type  }}</td>
-            <td><v-btn class=" text-capitalize ml-2" @click="deleteOrder(item.guid)" outlined color="red" text fab small><v-icon>mdi-delete</v-icon></v-btn></td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
+    <v-tabs v-model="tab" background-color="transparent" grow>
+      <v-tab> New </v-tab>
+      <v-tab> Restaurant accept</v-tab>
+      <v-tab> Restaurant Ready </v-tab>
+      <v-tab> Courier accept </v-tab>
+      <v-tab> Courier on way </v-tab>
+      <v-tab> Delivered </v-tab>
+      <v-tab> All </v-tab>
+    </v-tabs>
+    <v-tabs-items v-model="tab">
+          <v-tab-item>
+            <OrderTable status="new" :desserts="desserts" :getStatus="getStatus" :deleteOrder="deleteOrder"/>
+          </v-tab-item>
+          <v-tab-item>
+            <OrderTable status="restaurant-proccess" :desserts="desserts" :getStatus="getStatus" :deleteOrder="deleteOrder"/>
+          </v-tab-item>
+          <v-tab-item>
+            <OrderTable status="restaurant-ready" :desserts="desserts" :getStatus="getStatus" :deleteOrder="deleteOrder"/>
+          </v-tab-item>
+          <v-tab-item>
+            <OrderTable status="courier-accepted" :desserts="desserts" :getStatus="getStatus" :deleteOrder="deleteOrder"/>
+          </v-tab-item>
+          <v-tab-item>
+            <OrderTable status="courier-on-way" :desserts="desserts" :getStatus="getStatus" :deleteOrder="deleteOrder"/>
+          </v-tab-item>
+          <v-tab-item>
+            <OrderTable status="courier-delivered" :desserts="desserts" :getStatus="getStatus" :deleteOrder="deleteOrder"/>
+          </v-tab-item>
+          <v-tab-item>
+            <OrderTable status="all" :desserts="desserts" :getStatus="getStatus" :deleteOrder="deleteOrder"/>
+          </v-tab-item>
+    </v-tabs-items>
      <v-row justify="center">
     <v-dialog width="450" v-model="dialog" persistent max-width="500">
       <template v-slot:activator="{  }">
@@ -99,14 +97,19 @@
 
 <script>
 import Orders from '../services/Orders'
+import OrderTable from './Orders/index.vue'
 import Products from '../services/Products'
 import Users from '../services/Users'
 import MerchantBranch from '../services/MerchantBranch'
 
 export default {
+  components: {
+    OrderTable
+  },
   data () {
     return {
       dialog: false,
+      tab: 0,
       desserts: [],
       products: [],
       users: [],
