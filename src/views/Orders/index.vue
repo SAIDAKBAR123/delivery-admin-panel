@@ -22,10 +22,28 @@
             <td>{{ item.address }}</td>
             <td>{{ item.comment }}</td>
             <td>{{ item.created_at | timeformatter }}</td>
-            <td><v-chip text-color="orange" color="yellow lighten-4" class="rounded">
-              {{
-                getStatus(item.status)
-              }}</v-chip></td>
+            <td>
+                 <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="yellow darken-3"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          {{ getStatus(item.status) }}
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+            @click="changeStatus(item, st)"
+            v-for="(st, index) in statuses"
+            :key="index"
+        >
+          <v-list-item-title>{{ st.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu></td>
               <td>{{ item.delivery_type }}</td>
               <td>{{ item.delivery_price }}</td>
               <td>{{ item.payment_type  }}</td>
@@ -38,12 +56,57 @@
 </template>
 
 <script>
+import Orders from '../../services/Orders'
+
 export default {
   props: ['desserts', 'getStatus', 'deleteOrder', 'status'],
   computed: {
     list () {
       if (this.status === 'all') return this.desserts
       return this.desserts.filter(el => el.status === this.status)
+    }
+  },
+  methods: {
+    changeStatus (e, status) {
+      console.log(e, status)
+      Orders.putOrder({
+        ...e,
+        product_id: e.products.map(el => el.id),
+        status: status.tag
+      }).then(res => {
+        console.log(res)
+        window.location.reload()
+      })
+    }
+  },
+  data () {
+    return {
+      statuses: [
+        {
+          title: 'New',
+          tag: 'new'
+        },
+        {
+          title: 'Restaurant',
+          tag: 'restaurant-proccess'
+        },
+        {
+          title: 'Restaurant ready',
+          tag: 'restaurant-ready'
+        },
+        {
+          title: 'Courier accepted',
+          tag: 'courier-accepted'
+        },
+        {
+          title: 'Courier on way',
+          tag: 'courier-on-way'
+        },
+        {
+          title: 'Courier delivered',
+          tag: 'courier-delivered'
+        }
+      ]
     }
   }
 

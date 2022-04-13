@@ -44,11 +44,32 @@
     <v-dialog width="450" v-model="dialog" persistent max-width="500">
       <template v-slot:activator="{  }">
       </template>
-      <v-card width="500pxd">
+      <v-card width="500px">
         <v-card-title class="headline">Order create panel</v-card-title>
         <v-card-text>
-          <v-text-field v-model="form.address" label="Address" />
-          <v-text-field v-model="form.comment" label="Comment"/>
+          <v-select
+              v-model="form.merchant_id"
+              :items="merchants"
+              item-text="name"
+              item-value="guid"
+              label="Select Merchant"
+              @change="selectBranchList"
+              persistent-hint
+              return-object
+              single-line
+          ></v-select>
+          <v-select
+              v-model="form.branch_id"
+              :hint="`Please, branch here`"
+              :items="merchantBranchList"
+              @change="getMerchantBranchProducts"
+              item-text="name"
+              item-value="guid"
+              label="Select Branch"
+              persistent-hint
+              return-object
+              single-line
+          ></v-select>
            <v-select
             v-model="form.product_id"
             :hint="`You can select product you want to order`"
@@ -72,17 +93,8 @@
               return-object
               single-line
           ></v-select>
-          <v-select
-              v-model="form.branch_id"
-              :hint="`Please, branch here`"
-              :items="merchantBranchList"
-              item-text="name"
-              item-value="guid"
-              label="Select Branch"
-              persistent-hint
-              return-object
-              single-line
-          ></v-select>
+          <v-text-field v-model="form.address" label="Address" />
+          <v-text-field v-model="form.comment" label="Comment"/>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -101,6 +113,7 @@ import OrderTable from './Orders/index.vue'
 import Products from '../services/Products'
 import Users from '../services/Users'
 import MerchantBranch from '../services/MerchantBranch'
+import Merchant from '../services/Merchant'
 
 export default {
   components: {
@@ -112,10 +125,12 @@ export default {
       tab: 0,
       desserts: [],
       products: [],
+      merchants: [],
       users: [],
       merchantBranchList: [],
       form: {
         address: '',
+        merchant_id: '',
         comment: '',
         product_id: '',
         delivery_type: 'delivery',
@@ -127,6 +142,20 @@ export default {
     }
   },
   methods: {
+
+    selectBranchList (e) {
+      console.log(e)
+      Merchant.getMerchantBranch(e.guid).then(res => {
+        console.log(res)
+        this.merchantBranchList = res.merchant_branches
+      })
+      Merchant.getMerchantProducts(e.guid).then(res => {
+        this.products = res.products
+      })
+    },
+    getMerchantBranchProducts (e) {
+      console.log(e)
+    },
     getStatus (status) {
       switch (status) {
         case 'new':
@@ -176,6 +205,12 @@ export default {
         this.merchantBranchList = res.merchant_branches
       })
     },
+    getMerchants () {
+      Merchant.getMerchants().then(res => {
+        console.log(res)
+        this.merchants = res.merchants
+      })
+    },
     deleteOrder (id) {
       console.log(id)
       Orders.deleteOrder({ guid: id }).then(res => {
@@ -203,6 +238,7 @@ export default {
   created () {
     this.getOrders()
     this.getUsers()
+    this.getMerchants()
     this.getMerchanBranchList()
   }
 }
