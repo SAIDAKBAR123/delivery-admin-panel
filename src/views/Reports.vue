@@ -1,116 +1,102 @@
 <template>
   <div class="mx-2 my-2">
-    <v-row class="my-2" justify="space-between" align="center">
+    <v-row v-if="false" class="my-2" justify="space-between" align="center">
       <v-col cols="auto">
         <h3>Reports</h3>
       </v-col>
     </v-row>
-    <v-simple-table>
-      <template v-slot:default>
-        <thead>
-          <tr>
-            <th class="text-left">Order number</th>
-            <th class="text-left">Address</th>
-            <th class="text-left">Comments</th>
-            <th class="text-left">Created at</th>
-            <th class="text-left">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item,i) in desserts" :key="item.guid + i">
-            <td>{{ i + 1 }}</td>
-            <td>{{ item.address }}</td>
-            <td>{{ item.comment }}</td>
-            <td>{{ item.created_at | timeformatter }}</td>
-            <td><v-chip text-color="orange" color="yellow lighten-4" class="rounded">
-              {{
-                getStatus(item.status)
-              }}</v-chip></td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
+    <v-tabs v-model="tab" background-color="transparent" grow>
+      <v-tab> Merchants </v-tab>
+      <v-tab> Couriers </v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-tab-item>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">Order number</th>
+                <th class="text-left">Name</th>
+                <th class="text-left">Created at</th>
+                <th class="text-left">Comission</th>
+                <th class="text-left">Delivery time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="pointer"
+                v-for="(item, i) in merchants"
+                :key="item.guid + i"
+                @click="clickRow(item.guid)"
+              >
+                <td>{{ i + 1 }}</td>
+                <td @click="$router.push(`/reports/${item.guid}/merchant-branches`)" style="cursor: pointer">{{ item.name }}</td>
+                <td>{{ item.created_at | timeformatter }}</td>
+                <td>{{ item.comission }}</td>
+                <td>{{ item.delivery_time }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </v-tab-item>
+      <v-tab-item>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">Order number</th>
+                <th class="text-left">Name</th>
+                <th class="text-left">Login</th>
+                <th class="text-left">Created at</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, i) in couriers" :key="item.guid + i">
+                <td>{{ i + 1 }}</td>
+                <td style="cursor: pointer"  @click="$router.push(`/reports/${item.guid}/couriers`)">{{ item.name }}</td>
+                <td>{{ item.login }}</td>
+                <td>{{ item.created_at | timeformatter }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 
 <script>
-import Orders from '../services/Orders'
-import Users from '../services/Users'
+import Courier from '../services/Courier'
+import Merchant from '../services/Merchant'
 
 export default {
   data () {
     return {
       dialog: false,
-      desserts: [],
+      tab: 0,
+      merchants: [],
       products: [],
-      users: [],
-      merchantBranchList: [],
-      form: {
-        address: '',
-        comment: '',
-        product_id: '',
-        delivery_type: 'delivery',
-        payment_type: 'card',
-        user_id: '',
-        branch_id: '322656d6-97f9-4a7e-8270-e31aee2d76db'
-
-      }
+      users: []
     }
   },
   methods: {
-    getStatus (status) {
-      switch (status) {
-        case 'new':
-          return 'New'
-        case 'restaurant-proccess':
-          return 'Restaurant process'
-        case 'restaurant-ready':
-          return 'Restaurant ready'
-        case 'courier-accepted':
-          return 'Courier accepted'
-        case 'courier-delivered':
-          return 'Courier delivered'
-        default:
-          return 'New'
-      }
-    },
-    getUsers () {
-      Users.getUsers().then(res => {
+    getMerchants () {
+      Merchant.getMerchants().then((res) => {
         console.log(res)
-        this.users = res.users
-      }).catch(err => {
-        console.log(err)
+        this.merchants = res.merchants
       })
     },
-    orderNow () {
-      console.log(this.form)
-      Orders.postOrder({
-        address: this.form.address,
-        comment: this.form.comment,
-        product_id: this.form.product_id.map(el => el.id),
-        user_id: this.form.user_id.guid,
-        branch_id: this.form.branch_id.guid,
-        delivery_type: 'delivery',
-        payment_type: 'cash'
-      }).then(res => {
-        this.dialog = false
+    getCouriers () {
+      Courier.getCouriers().then(res => {
         console.log(res)
-        // window.location.reload()
-        this.form = {}
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    getOrders () {
-      Orders.getOrders().then(res => {
-        console.log(res)
-        this.desserts = res.orders
-        // this.getProducts()
+        this.couriers = res.couriers
       })
     }
   },
   created () {
-    this.getOrders()
+    this.getMerchants()
+    this.getCouriers()
   }
 }
 </script>

@@ -49,6 +49,16 @@ const routes = [
     path: '/reports',
     name: 'Reports',
     component: () => import('../views/Reports.vue')
+  },
+  {
+    path: '/reports/:merchantId/merchant-branches',
+    name: 'Reports-branches',
+    component: () => import('../views/Reports/MerchantBranches.vue')
+  },
+  {
+    path: '/reports/:courierId/couriers',
+    name: 'Courier-branches',
+    component: () => import('../views/Reports/Couriers.vue')
   }
 ]
 

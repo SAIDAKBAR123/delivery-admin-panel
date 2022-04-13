@@ -6,6 +6,11 @@ import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
+Vue.prototype.$moneyFormat = (str) => {
+  if (!str) return ''
+  return str.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$& ') + ' uzs'
+}
+
 Vue.filter('timeformatter', function (value) {
   const [date, timeRange] = value.split('T')
   return date + ' ' + timeRange.substring(0, 5)

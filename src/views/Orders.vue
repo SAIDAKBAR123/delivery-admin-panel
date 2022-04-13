@@ -17,6 +17,10 @@
             <th class="text-left">Comments</th>
             <th class="text-left">Created at</th>
             <th class="text-left">Status</th>
+            <th class="text-left">Delivery type</th>
+            <th class="text-left">Delivery price</th>
+            <th class="text-left">Payment type</th>
+
             <th class="text-left"></th>
           </tr>
         </thead>
@@ -30,6 +34,9 @@
               {{
                 getStatus(item.status)
               }}</v-chip></td>
+              <td>{{ item.delivery_type }}</td>
+              <td>{{ item.delivery_price }}</td>
+              <td>{{ item.payment_type  }}</td>
             <td><v-btn class=" text-capitalize ml-2" @click="deleteOrder(item.guid)" outlined color="red" text fab small><v-icon>mdi-delete</v-icon></v-btn></td>
           </tr>
         </tbody>

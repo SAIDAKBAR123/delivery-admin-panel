@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item,i) in desserts" :key="item.guid + i">
+          <tr v-for="(item,i) in products" :key="item.guid + i">
             <td>{{ i + 1 }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.price | moneyFormatter }} uzs</td>
@@ -83,12 +83,14 @@
 <script>
 import Products from '../services/Products'
 import Categories from '../services/Categories'
+import Merchant from '../services/Merchant'
 
 export default {
   data () {
     return {
       dialog: false,
       desserts: [],
+      products: [],
       categories: [],
       users: [],
       form: {
@@ -111,13 +113,6 @@ export default {
         name: '',
         price: 0
       })
-      // this.form = {
-      //   ...this.form,
-      //   options: [...this.form, {
-      //     name: '',
-      //     price: 0
-      //   }]
-      // }
     },
     createProduct () {
       console.log(this.form)
@@ -157,12 +152,12 @@ export default {
       return item.name
     },
     getProducts () {
-      Products.getProducts().then(ress => {
-        Categories.getCategories().then(res => {
-          console.log(res)
-          this.categories = res.categories
-          this.desserts = ress.products
-        })
+      Merchant.getMerchantProducts(this.$route.params.merchantId).then(ress => {
+        console.log(ress)
+        this.products = ress.products
+      })
+      Categories.getCategories().then(res => {
+        this.categories = res.categories
       })
     }
   },
@@ -177,7 +172,7 @@ export default {
   },
   created () {
     this.getProducts()
-    this.getUsers()
+    // this.getUsers()
   }
 }
 </script>
