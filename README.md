@@ -1,6 +1,7 @@
 # cms-jasur
 
-## Project setup
+## Project setup, In order to setup, please do these commands below by order.
+## You need Node js enviroment here. and setup it first.
 ```
 npm install
 ```
