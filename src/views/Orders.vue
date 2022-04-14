@@ -84,13 +84,33 @@
           ></v-select>
           <v-select
               v-model="form.user_id"
-              :hint="`Please, select use here`"
+              :hint="`Please, select user here`"
               :items="users"
               item-text="name"
               item-value="guid"
               label="Select user"
               persistent-hint
               return-object
+              single-line
+          ></v-select>
+          <v-select
+              v-model="form.delivery_type"
+              :hint="`Please, select delivery type`"
+              :items="['delivery', 'self-pick-up']"
+              item-text="name"
+              item-value="guid"
+              label="Select delivery type"
+              persistent-hint
+              single-line
+          ></v-select>
+          <v-select
+              v-model="form.payment_type"
+              :hint="`Please, select payment type`"
+              :items="['cash', 'card']"
+              item-text="name"
+              item-value="guid"
+              label="Select payment type"
+              persistent-hint
               single-line
           ></v-select>
           <v-text-field v-model="form.address" label="Address" />
@@ -188,8 +208,8 @@ export default {
         product_id: this.form.product_id.map(el => el.id),
         user_id: this.form.user_id.guid,
         branch_id: this.form.branch_id.guid,
-        delivery_type: 'delivery',
-        payment_type: 'cash'
+        delivery_type: this.form.delivery_type,
+        payment_type: this.form.payment_type
       }).then(res => {
         this.dialog = false
         console.log(res)
