@@ -4,6 +4,32 @@
       <v-col cols="auto">
         <h3>Merchant Report</h3>
       </v-col>
+      <v-col cols="4">
+         <v-simple-table  dense>
+                <template v-slot:default>
+                  <thead>
+                    <tr style="border: 1px solid black">
+                      <th class="text-left"></th>
+                      <th class="text-left"></th>
+                    </tr>
+                  </thead>
+                     <tbody>
+                      <tr>
+                        <td><strong>Restaurant name</strong></td>
+                        <td>{{ merchant.name }}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Comission</strong></td>
+                        <td>{{ merchant.comission }} %</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Restaurant need to pay</strong></td>
+                        <td>{{ $moneyFormat(deliveryegyEarning(desserts)) }}</td>
+                      </tr>
+                     </tbody>
+                </template>
+         </v-simple-table>
+      </v-col>
     </v-row>
     <v-simple-table>
       <template v-slot:default>
@@ -58,7 +84,8 @@ export default {
       desserts: [],
       products: [],
       users: [],
-      merchantBranchList: []
+      merchantBranchList: [],
+      merchant: {}
     }
   },
   methods: {
@@ -84,7 +111,12 @@ export default {
         return acc
       }, 0)
     },
-
+    getMerchant (id) {
+      Merchant.getMerchant(id).then(res => {
+        console.log(res)
+        this.merchant = res
+      })
+    },
     getMerchantOrder () {
       Merchant.getMerchantOrders(this.$route.params.merchantId).then(res => {
         console.log(res)
@@ -100,6 +132,7 @@ export default {
   },
 
   created () {
+    this.getMerchant(this.$route.params.merchantId)
     this.getMerchantOrder()
   }
 }
