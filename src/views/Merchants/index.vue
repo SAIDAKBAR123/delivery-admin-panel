@@ -43,6 +43,7 @@
           <v-text-field v-model="form.logo" label="Logo" />
           <v-text-field v-model="form.background_image" label="Background image" />
           <v-text-field v-model="form.delivery_time" label="Delivery time" type="number" />
+          <v-text-field v-model="form.description" label="Description" type="text" />
           <v-text-field v-model="form.comission" label="Comission"  type="number"/>
           <v-switch v-model="form.status" label="Status" />
         </v-card-text>
@@ -66,11 +67,12 @@ export default {
       dialog: false,
       desserts: [],
       form: {
-        background_image: 'string',
+        background_image: '',
         comission: 0,
         delivery_time: 0,
-        logo: 'string',
-        name: 'string',
+        logo: '',
+        name: '',
+        description: '',
         status: true
       }
     }
