@@ -43,6 +43,7 @@
           <v-text-field v-model="form.name" label="Name" />
           <v-text-field v-model="form.login" label="Login here"/>
           <v-text-field v-model="form.password" label="Password here"/>
+          <v-text-field v-model="form.phone_number" label="Password here"/>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -67,7 +68,8 @@ export default {
       form: {
         login: '',
         name: '',
-        password: ''
+        password: '',
+        phone_number: ''
       }
     }
   },
