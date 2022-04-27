@@ -27,7 +27,9 @@
             <td>{{ item.created_at | timeformatter }}</td>
             <td>{{ item.comission }}</td>
             <td>{{ item.delivery_time }}</td>
-            <td><v-btn class=" text-capitalize ml-2" @click="deleteMerchant(item.guid)" outlined color="red" text fab small><v-icon>mdi-delete</v-icon></v-btn></td>
+            <td>
+              <v-btn class=" text-capitalize ml-2" @click="edit(item, $event)" outlined color="orange" text fab small><v-icon>mdi-pen</v-icon></v-btn>
+              <v-btn class=" text-capitalize ml-2" @click="deleteMerchant(item.guid)" outlined color="red" text fab small><v-icon>mdi-delete</v-icon></v-btn></td>
           </tr>
         </tbody>
       </template>
@@ -50,7 +52,8 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red darken-1" text @click="dialog = false">cancel</v-btn>
-          <v-btn color="blue darken-1" dark @click="createMerchant">Create</v-btn>
+          <v-btn color="blue darken-1" v-if="!form.guid" dark @click="createMerchant">Create</v-btn>
+          <v-btn color="green darken-1" v-else dark @click="updateMerchant">Update</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -78,9 +81,28 @@ export default {
     }
   },
   methods: {
+    edit (element, event) {
+      event.stopPropagation()
+      this.dialog = true
+      this.form = element
+    },
     clickRow (guid) {
       this.$router.push('/merchants/' + guid + '/merchant-branches')
     },
+
+    updateMerchant () {
+      Merchant.putMerchant({
+        ...this.form
+      }).then(res => {
+        console.log(res)
+        this.dialog = false
+        window.location.reload()
+        this.form = {}
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+
     createMerchant () {
       Merchant.postMerchant({
         ...this.form,
