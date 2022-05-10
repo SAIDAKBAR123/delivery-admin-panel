@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item,i) in desserts" :key="item.guid + i">
+          <tr v-for="(item,i) in desserts" :key="item.guid + i"> <!-- [{ name, created_at, .....}, {}, {}] -->
             <td>{{ i + 1 }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.created_at | timeformatter }}</td>
@@ -62,6 +62,7 @@ export default {
     }
   },
   methods: {
+
     createCategory () {
       Categories.postCategory({
         name: this.form.name,
@@ -74,6 +75,7 @@ export default {
         console.log(err)
       })
     },
+
     deleteCategory (id) {
       Categories.deleteCategory({ guid: id }).then(res => {
         console.log(res)
